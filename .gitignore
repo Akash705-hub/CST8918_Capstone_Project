@@ -13,8 +13,7 @@ crash.*.log
 *.tfvars.json
 
 # Allow example variable files
-!example.tfvars
-!*.example.tfvars
+!*.tfvars.example
 
 # Terraform plan files
 *.tfplan
