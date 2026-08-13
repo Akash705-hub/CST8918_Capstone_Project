@@ -13,35 +13,15 @@
 # a subnet input. That keeps it decoupled from the network module.
 # ---------------------------------------------------------------------------
 
-terraform {
-  required_version = ">= 1.5"
-
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = ">= 3.100, < 5.0"
-    }
-  }
-}
-
-resource "azurerm_redis_cache" "this" {
-  name                = var.name
-  resource_group_name = var.resource_group_name
+resource "azurerm_redis_cache" "redis" {
+  name                = var.redis_name
   location            = var.location
+  resource_group_name = var.resource_group_name
 
-  capacity = var.capacity
-  family   = var.family
-  sku_name = var.sku_name
+  capacity            = var.capacity
+  family              = var.family
+  sku_name            = var.sku_name
+  minimum_tls_version = var.minimum_tls_version
 
-  # Security hardening: TLS only.
-  non_ssl_port_enabled = var.non_ssl_port_enabled
-  minimum_tls_version  = var.minimum_tls_version
-
-  tags = merge(
-    {
-      environment = var.environment
-      application = "remix-weather-app"
-    },
-    var.tags
-  )
+  tags = var.tags
 }
