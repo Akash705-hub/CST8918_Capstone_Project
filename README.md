@@ -121,6 +121,28 @@ The infrastructure is organized into three environments:
 
 ---
 
+# Local Testing
+
+![alt text](./screenshot/ResourceGroup.png)
+
+![alt text](./screenshot/ResourceGroup1.png)
+
+![alt text](./screenshot/ResourceGroup2.png)
+
+![alt text](./screenshot/ResourceGroup3.png)
+
+![alt text](./screenshot/StorageAccount.png)
+
+![alt text](./screenshot/Subnets.png)
+
+![alt text](./screenshot/ContainerRegistry.png)
+
+![alt text](./screenshot/ContainerRegistry1.png)
+
+
+
+---
+
 # GitHub Actions
 
 The following GitHub Actions workflows are included or will be implemented during the project:
