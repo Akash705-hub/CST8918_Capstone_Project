@@ -1,0 +1,45 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'app/**'
+      - 'kubernetes/**'
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  ACR_NAME: ${{ secrets.ACR_NAME }}
+  RESOURCE_GROUP: cst8918-final-project-group-3
+  AKS_CLUSTER_NAME: aks-prod
+
+jobs:
+  deploy-prod:
+    name: Deploy to Production AKS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Azure Login via OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Set AKS Credentials
+        run: |
+          az aks get-credentials \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --name ${{ env.AKS_CLUSTER_NAME }} \
+            --overwrite-existing
+
+      - name: Deploy to Production AKS Cluster
+        run: |
+          sed -i 's|IMAGE_PLACEHOLDER|'${{ env.ACR_NAME }}'.azurecr.io/remix-weather-app:'${{ github.sha }}'|g' kubernetes/deployment.yaml
+          kubectl apply -f kubernetes/
