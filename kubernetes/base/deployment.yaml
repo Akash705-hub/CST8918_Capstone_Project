@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: remix-weather-app
+  namespace: default
+  labels:
+    app: remix-weather-app
+    version: v1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: remix-weather-app
+  template:
+    metadata:
+      labels:
+        app: remix-weather-app
+        version: v1
+    spec:
+      containers:
+      - name: remix-weather-app
+        image: cst8918acr.azurecr.io/remix-weather-app:latest
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 3000
+          protocol: TCP
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: REDIS_HOST
+          valueFrom:
+            secretKeyRef:
+              name: redis-config
+              key: host
+        - name: REDIS_PORT
+          valueFrom:
+            secretKeyRef:
+              name: redis-config
+              key: port
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redis-config
+              key: password
+        - name: WEATHER_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: weather-api
+              key: api-key
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 10
+          periodSeconds: 5
+      imagePullSecrets:
+      - name: acr-pull-secret

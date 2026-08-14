@@ -1,0 +1,5 @@
+resource_group_name = "rg-cst8918-final-group3"
+
+storage_account_name = "cst8918g3tfstate"
+
+container_name = "tfstate"
