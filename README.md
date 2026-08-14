@@ -26,7 +26,7 @@ The objective of this project is to provision and manage the infrastructure requ
 | **Diniz Rodrigues Martins** | Repository setup, project structure, Terraform bootstrap module, network module, provider configuration, initial documentation (README), project integration support | ✅ Completed (initial setup) |
 | **Akash Patel** | Terraform AKS module, create AKS clusters for Test and Production environments, validate Kubernetes connectivity | ✅ Completed |
 | **Divyang Lodariya** | Terraform ACR module, Terraform Redis module, configure Azure Container Registry and Azure Cache for Redis for Test and Production | ✅ Completed |
-| **Harshdeep Puri** | GitHub Actions workflows (Terraform Plan, Apply, Docker Build, Deployment), Kubernetes manifests, Remix Weather App deployment to AKS | ⏳ Pending |
+| **Harshdeep Puri** | GitHub Actions workflows (Terraform Plan, Apply, Docker Build, Deployment), Kubernetes manifests, Remix Weather App deployment to AKS | ✅ Completed |
 
 ---
 
@@ -37,11 +37,11 @@ FinalProject-Group3
 │
 ├── .github/
 │   └── workflows/
-│       ├── app-build.yml
-│       ├── app-deploy.yml
-│       ├── terraform-apply.yml
-│       ├── terraform-plan.yml
-│       └── terraform-static.yml
+│       ├── app-prod-deploy.yml
+│       ├── app-test-deploy.yml
+│       ├── tf-apply.yml
+│       ├── tf-plan.yml
+│       └── tf-static-analysis.yml
 |── app/
 │
 ├── infra/
@@ -55,12 +55,7 @@ FinalProject-Group3
 │       ├── aks/
 │       ├── network/
 │       └── redis/
-├── k8s/
-|   ├── prod/
-│   ├── test/
-|
 ├── kubernetes/
-│   ├── base/
 │   ├── test/
 │   └── prod/
 │

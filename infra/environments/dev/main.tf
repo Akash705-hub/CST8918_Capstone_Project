@@ -8,13 +8,12 @@ terraform {
     }
   }
 
-  # Uncomment below after running bootstrap to create the backend
-  # backend "azurerm" {
-  #   resource_group_name  = "cst8918-tfstate-group"
-  #   storage_account_name = "cst8918tfstate"
-  #   container_name       = "tfstate"
-  #   key                  = "dev.terraform.tfstate"
-  # }
+  backend "azurerm" {
+    resource_group_name  = "cst8918-final-project-group-3"
+    storage_account_name = "finalprojectbackend"
+    container_name       = "tfstate"
+    key                  = "dev.terraform.tfstate"
+  }
 }
 
 provider "azurerm" {
@@ -25,7 +24,7 @@ provider "azurerm" {
 
 # Network Module
 module "network" {
-  source = "../modules/network"
+  source = "../../modules/network"
 
   resource_group_name = var.network_resource_group_name
   location            = var.location
