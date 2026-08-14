@@ -1,0 +1,64 @@
+name: Terraform Lint and Plan
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'base/**'
+      - 'test/**'
+      - 'prod/**'
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
+jobs:
+  lint-and-plan:
+    name: Lint & Plan Infrastructure
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.5.0
+
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v4
+        with:
+          tflint_version: v0.48.0
+
+      - name: Run TFLint
+        run: |
+          tflint --init
+          tflint --recursive
+
+      - name: Azure Login via OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Terraform Plan (Base Infrastructure)
+        run: |
+          cd base
+          terraform init
+          terraform plan -no-color
+
+      - name: Terraform Plan (Test Environment)
+        run: |
+          cd test
+          terraform init
+          terraform plan -no-color
+
+      - name: Terraform Plan (Production Environment)
+        run: |
+          cd prod
+          terraform init
+          terraform plan -no-color

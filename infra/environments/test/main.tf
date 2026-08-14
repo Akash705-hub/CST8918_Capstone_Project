@@ -16,10 +16,10 @@ terraform {
 
   # Uncomment below after running bootstrap to create the backend
   backend "azurerm" {
-     resource_group_name  = "cst8918-final-project-group-3"
-     storage_account_name = "finalprojectbackend"
-     container_name       = "tfstate"
-     key                  = "test.terraform.tfstate"
+    resource_group_name  = "cst8918-final-project-group-3"
+    storage_account_name = "finalprojectbackend"
+    container_name       = "tfstate"
+    key                  = "test.terraform.tfstate"
   }
 }
 
