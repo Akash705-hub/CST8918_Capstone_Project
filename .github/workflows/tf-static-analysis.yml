@@ -25,13 +25,13 @@ jobs:
 
       - name: Terraform Validate
         run: |
-          for dir in base test prod; do
+          for dir in infra/backend infra/environments/dev infra/environments/test infra/environments/prod; do
             if [ -d "$dir" ]; then
               echo "Validating $dir..."
               cd $dir
               terraform init -backend=false
               terraform validate
-              cd ..
+              cd - > /dev/null
             fi
           done
 

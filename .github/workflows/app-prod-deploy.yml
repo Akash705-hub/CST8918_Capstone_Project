@@ -40,5 +40,5 @@ jobs:
 
       - name: Deploy to Production AKS Cluster
         run: |
-          sed -i 's|IMAGE_PLACEHOLDER|'${{ env.ACR_NAME }}'.azurecr.io/remix-weather-app:'${{ github.sha }}'|g' kubernetes/deployment.yaml
-          kubectl apply -f kubernetes/
+          sed -i 's|IMAGE_PLACEHOLDER|'${{ env.ACR_NAME }}'.azurecr.io/remix-weather-app:'${{ github.sha }}'|g' kubernetes/prod/deployment.yaml
+          kubectl apply -f kubernetes/prod/

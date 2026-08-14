@@ -1,0 +1,11 @@
+subscription_id = "<your-azure-subscription-id>"
+
+resource_group_name = "cst8918-final-project-group-3"
+
+vnet_name = "cst8918-vnet"
+
+acr_name = "cst8918acr"
+
+aks_test_cluster_name = "aks-test"
+
+redis_test_name = "cst8918-g3-redis-test"

@@ -5,9 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'base/**'
-      - 'test/**'
-      - 'prod/**'
+      - 'infra/**'
 
 permissions:
   id-token: write
@@ -17,6 +15,17 @@ jobs:
   apply:
     name: Apply Infrastructure Changes
     runs-on: ubuntu-latest
+
+    env:
+      TF_VAR_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      TF_VAR_network_resource_group_name: cst8918-final-project-group-3
+      TF_VAR_resource_group_name: cst8918-final-project-group-3
+      TF_VAR_vnet_name: cst8918-vnet
+      TF_VAR_acr_name: cst8918acr
+      TF_VAR_aks_test_cluster_name: aks-test
+      TF_VAR_aks_prod_cluster_name: aks-prod
+      TF_VAR_redis_test_name: cst8918-g3-redis-test
+      TF_VAR_redis_prod_name: cst8918-g3-redis-prod
 
     steps:
       - name: Checkout Code
@@ -34,20 +43,20 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Apply Base Infrastructure
+      - name: Apply Network (Dev Environment)
         run: |
-          cd base
+          cd infra/environments/dev
           terraform init
           terraform apply -auto-approve
 
       - name: Apply Test Environment
         run: |
-          cd test
+          cd infra/environments/test
           terraform init
           terraform apply -auto-approve
 
       - name: Apply Production Environment
         run: |
-          cd prod
+          cd infra/environments/prod
           terraform init
           terraform apply -auto-approve
