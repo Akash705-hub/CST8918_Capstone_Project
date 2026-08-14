@@ -1,12 +1,11 @@
-name: Build & Deploy to Test
+name: Build Image & Deploy to Test
 
 on:
   pull_request:
     branches:
       - main
     paths:
-      - 'app/**'
-      - 'kubernetes/**'
+      - 'app/**' # Restricted strictly to app code changes
 
 permissions:
   id-token: write

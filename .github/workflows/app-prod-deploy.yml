@@ -5,8 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'app/**'
-      - 'kubernetes/**'
+      - 'app/**' # Restricted strictly to app code changes
 
 permissions:
   id-token: write
